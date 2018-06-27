@@ -1,7 +1,7 @@
 # whatsmyip
 
 A tool to find your public ip address through the Google DNS servers.
-Depending on (dnspython)[http://www.dnspython.org/].
+Depending on [dnspython](http://www.dnspython.org/).
 
 ## Usage
 
