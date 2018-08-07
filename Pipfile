@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+dnspython = "*"
 
 [dev-packages]
 pytest = "*"
@@ -11,7 +12,6 @@ isort = "*"
 importmagic = "*"
 epc = "*"
 "flake8" = "*"
-"flake8-mypy" = "*"
 
 [requires]
 python_version = "3.6"
