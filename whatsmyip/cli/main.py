@@ -1,8 +1,7 @@
-#! /usr/bin/env python3
-import dns.resolver  # dependency: dnspython
+import dns.resolver
 
 
-if __name__ == '__main__':
+def main():
     answer = dns.resolver.query('ns1.google.com')
     ns_ip = answer[0].address
 
