@@ -1,5 +1,4 @@
 import click
-import dns.resolver
 from whatsmyip.ip import get_ip
 from whatsmyip.providers import GoogleDnsProvider, ip_providers
 
