@@ -2,10 +2,15 @@ import dns.resolver
 import requests
 
 
-class GoogleDnsProvider:
+class IpProvider:
+    pass
+
+
+class GoogleDnsProvider(IpProvider):
     name = 'google-dns'
 
-    def fetch():
+    @staticmethod
+    def fetch() -> str:
         r = dns.resolver.query('ns1.google.com')
         ns_ip = r[0].address
 
@@ -19,10 +24,11 @@ class GoogleDnsProvider:
         return ip
 
 
-class HttpbinProvider:
+class HttpbinProvider(IpProvider):
     name = 'httpbin'
 
-    def fetch():
+    @staticmethod
+    def fetch() -> str:
         r = requests.get(url='https://httpbin.org/ip',
                          headers=dict(Accept='application/json'))
         ip = r.json()['origin']

@@ -7,6 +7,7 @@ name = "pypi"
 dnspython = "*"
 click = "*"
 requests = "*"
+"flake8-mypy" = "*"
 
 [dev-packages]
 pytest = "*"
