@@ -10,6 +10,7 @@ usage:
 
 test:
 	pipenv run mypy whatsmyip
+	pipenv run flake8
 
 run:
 	pipenv run ./bin/myip
