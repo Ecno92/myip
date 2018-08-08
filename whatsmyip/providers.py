@@ -1,16 +1,22 @@
-import dns.resolver
+from typing import Dict
+
+import dns.resolver  # type: ignore
 import requests
 
 
-class IpProvider:
-    pass
-
-
-class GoogleDnsProvider(IpProvider):
-    name = 'google-dns'
+class IpProvider(type):
+    name: str
 
     @staticmethod
     def fetch() -> str:
+        raise NotImplementedError
+
+
+class GoogleDnsProvider(metaclass=IpProvider):
+    name = 'google-dns'
+
+    @staticmethod
+    def fetch():
         r = dns.resolver.query('ns1.google.com')
         ns_ip = r[0].address
 
@@ -24,16 +30,17 @@ class GoogleDnsProvider(IpProvider):
         return ip
 
 
-class HttpbinProvider(IpProvider):
+class HttpbinProvider(metaclass=IpProvider):
     name = 'httpbin'
 
     @staticmethod
-    def fetch() -> str:
+    def fetch():
         r = requests.get(url='https://httpbin.org/ip',
                          headers=dict(Accept='application/json'))
         ip = r.json()['origin']
         return ip
 
 
-ip_providers = {GoogleDnsProvider.name: GoogleDnsProvider,
-                HttpbinProvider.name: HttpbinProvider}
+ip_providers: Dict[str, IpProvider] = {
+    GoogleDnsProvider.name: GoogleDnsProvider,
+    HttpbinProvider.name: HttpbinProvider}

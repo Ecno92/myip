@@ -8,6 +8,6 @@ from whatsmyip.providers import GoogleDnsProvider, ip_providers
               default=GoogleDnsProvider.name,
               help='name of the provider')
 def main(provider: str) -> None:
-    provider = ip_providers.get(provider)
-    ip = get_ip(provider)
+    provider_cls = ip_providers[provider]
+    ip = get_ip(provider_cls)
     click.echo(ip)

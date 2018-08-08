@@ -5,11 +5,16 @@ usage:
 	@echo '---------------------------------------------------------------------------'
 	@echo ''
 	@echo '[1] 	usage:		Show the available options of this Makefile'
-	@echo '[2]		run:		Run the myip command from the bin/ directory'
+	@echo '[2]   test:		Run mypy'
+	@echo '[3]		run:		Run the myip command from the bin/ directory'
+
+test:
+	pipenv run mypy whatsmyip
 
 run:
 	pipenv run ./bin/myip
 
 .PHONY: \
 	usage \
+	test  \
 	run
