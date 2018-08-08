@@ -1,14 +1,18 @@
+import click
 import dns.resolver
+from whatsmyip.ip import get_ip
+from whatsmyip.providers import GoogleDnsProvider, ip_providers
 
 
-def main():
-    answer = dns.resolver.query('ns1.google.com')
-    ns_ip = answer[0].address
+@click.group()
+def cli():
+    pass
 
-    resolver = dns.resolver.Resolver(configure=False)
-    resolver.nameservers = [ns_ip]
-
-    q_result = resolver.query('o-o.myaddr.l.google.com', 'TXT')
-    my_ip = q_result.response.answer[0][0].to_text()
-    my_ip = my_ip.replace('"', '')
-    print(my_ip)
+@cli.command(help='Query for the external IP address')
+@click.option('--provider', type=click.Choice(ip_providers.keys()),
+              default=GoogleDnsProvider.name,
+              help='name of the provider')
+def main(provider):
+    provider = ip_providers.get(provider)
+    ip = get_ip(provider)
+    click.echo(ip)

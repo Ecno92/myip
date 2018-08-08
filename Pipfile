@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 dnspython = "*"
+click = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
