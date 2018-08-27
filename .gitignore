@@ -1,5 +1,4 @@
-*.egg-info
-dist
-build
+tmp/*
 __pycache__
-.mypy_cache
+*.pyc
+!tmp/.gitkeep
