@@ -7,7 +7,6 @@ name = "pypi"
 dnspython = "*"
 click = "*"
 requests = "*"
-"flake8-mypy" = "*"
 
 [dev-packages]
 pytest = "*"
@@ -15,6 +14,8 @@ isort = "*"
 importmagic = "*"
 epc = "*"
 "flake8" = "*"
+"flake8-mypy" = "*"
+responses = "*"
 
 [requires]
 python_version = "3.6"

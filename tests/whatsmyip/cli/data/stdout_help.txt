@@ -1,0 +1,8 @@
+Usage: myip [OPTIONS]
+
+  Query for the external IP address
+
+Options:
+  --provider [google-dns|httpbin]
+                                  Name of the provider
+  --help                          Show this message and exit.

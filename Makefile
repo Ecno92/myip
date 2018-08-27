@@ -9,8 +9,9 @@ usage:
 	@echo '[3]		run:		Run the myip command from the bin/ directory'
 
 test:
-	pipenv run mypy whatsmyip
+	pipenv run mypy src
 	pipenv run flake8
+	export PYTHONPATH=src/ && pipenv run pytest
 
 run:
 	pipenv run ./bin/myip
