@@ -8,13 +8,16 @@ usage:
 	@echo '[2]   test:		Run mypy'
 	@echo '[3]		run:		Run the myip command from the bin/ directory'
 
-test:
+test: tmp/
 	pipenv run mypy src
 	pipenv run flake8
 	export PYTHONPATH=src/ && pipenv run pytest
 
 run:
 	pipenv run ./bin/myip
+
+tmp/:
+	mkdir tmp
 
 .PHONY: \
 	usage \
