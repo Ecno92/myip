@@ -3,42 +3,23 @@ language: python
 install:
   - pip install pipenv --upgrade
 cache: pip
+python:
+  - '3.6'
+matrix:
+  include:
+    - python: 3.7
+      dist: xenial
 jobs:
   include:
-    # flake8
     - stage: flake8
-      script:
-        - make flake8
-      python: '3.6'
-    - stage: flake8
-      script:
-        - make flake8
-      python: '3.7'
-      dist: xenial
-      sudo: true
+      script: make flake8
 
-
-    # mypy
     - stage: mypy
       script:
         - make mypy
-      python: '3.6'
-    - stage: mypy
-      script:
-        - make mypy
-      python: '3.7'
-      dist: xenial
-      sudo: true
 
-    # pytest
     - stage: pytest
       script:
         - make pytest
-      python: '3.6'
-    - stage: pytest
-      script:
-        - make pytest
-      python: '3.7'
-      dist: xenial
-      sudo: true
+
 
