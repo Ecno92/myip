@@ -10,7 +10,7 @@ usage:
 	@echo '[4]		run:		Run the myip command from the bin/ directory'
 
 export PIPENV_VENV_IN_PROJECT := 1
-.venv/bin:
+.venv/bin: Pipfile
 	pipenv install --dev --skip-lock
 
 init:.venv/bin
