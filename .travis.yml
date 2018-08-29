@@ -1,0 +1,38 @@
+sudo: false
+language: python
+install:
+  - pip install pipenv --upgrade
+cache: pip
+jobs:
+  include:
+    # flake8
+    - stage: flake8
+      script:
+        - make flake8
+      python: '3.6'
+    - stage: flake8
+      script:
+        - make flake8
+      python: '3.7'
+
+
+    # mypy
+    - stage: mypy
+      script:
+        - make mypy
+      python: '3.6'
+    - stage: mypy
+      script:
+        - make mypy
+      python: '3.7'
+
+
+    # pytest
+    - stage: pytest
+      script:
+        - make pytest
+      python: '3.6'
+    - stage: pytest
+      script:
+        - make pytest
+      python: '3.7'
