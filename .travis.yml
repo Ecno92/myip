@@ -3,9 +3,9 @@ language: python
 install:
   - pip install pipenv --upgrade
 cache: pip
-python:
-  - '3.6'
 matrix:
+  include:
+    - python: 3.6
   include:
     - python: 3.7
       dist: xenial
