@@ -9,17 +9,8 @@ matrix:
   include:
     - python: 3.7
       dist: xenial
-jobs:
-  include:
-    - stage: flake8
-      script: make flake8
-
-    - stage: mypy
-      script:
-        - make mypy
-
-    - stage: pytest
-      script:
-        - make pytest
-
-
+      sudo: true
+script:
+  - make flake8
+  - make mypy
+  - make pytest
