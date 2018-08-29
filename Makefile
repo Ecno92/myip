@@ -10,8 +10,8 @@ usage:
 	@echo '[4]		run:		Run the myip command from the bin/ directory'
 
 export PIPENV_VENV_IN_PROJECT := 1
-.venv/bin:
-	pipenv install --dev --skip-lock
+.venv/bin: Pipfile
+	pipenv install --dev
 
 init:.venv/bin
 
@@ -30,7 +30,7 @@ pytest-all-versions:
 		echo '===========================' ; \
 		docker run -v "$(PWD):/workdir" -w "/workdir" \
 			-v "/workdir/.venv" -v "/workdir/tmp/" \
-			python:$$py_version /bin/bash -c "pip install pipenv && make pytest" ; \
+			python:$$py_version /bin/bash -c "pip install pipenv --upgrade && make pytest" ; \
 	done
 
 test: mypy flake8 pytest
