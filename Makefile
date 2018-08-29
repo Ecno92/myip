@@ -11,7 +11,7 @@ usage:
 
 export PIPENV_VENV_IN_PROJECT := 1
 .venv/bin: Pipfile
-	pipenv install --dev --skip-lock
+	pipenv install --dev
 
 init:.venv/bin
 
