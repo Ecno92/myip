@@ -14,6 +14,8 @@ jobs:
       script:
         - make flake8
       python: '3.7'
+      dist: xenial
+      sudo: true
 
 
     # mypy
@@ -25,7 +27,8 @@ jobs:
       script:
         - make mypy
       python: '3.7'
-
+      dist: xenial
+      sudo: true
 
     # pytest
     - stage: pytest
@@ -36,3 +39,6 @@ jobs:
       script:
         - make pytest
       python: '3.7'
+      dist: xenial
+      sudo: true
+
