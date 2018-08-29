@@ -30,7 +30,7 @@ pytest-all-versions:
 		echo '===========================' ; \
 		docker run -v "$(PWD):/workdir" -w "/workdir" \
 			-v "/workdir/.venv" -v "/workdir/tmp/" \
-			python:$$py_version /bin/bash -c "pip install pipenv && make pytest" ; \
+			python:$$py_version /bin/bash -c "pip install pipenv --upgrade && make pytest" ; \
 	done
 
 test: mypy flake8 pytest
