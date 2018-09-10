@@ -1,5 +1,5 @@
 # whatsmyip | myip
-![CI-status](https://travis-ci.org/Ecno92/myip.svg?branch=master)
+[![Build Status](https://travis-ci.org/Ecno92/myip.svg?branch=master)](https://travis-ci.org/Ecno92/myip)
 
 ## Usage
 
