@@ -1,3 +1,4 @@
+include .githooks/Makefile
 .DEFAULT_GOAL := usage
 
 usage:
@@ -10,18 +11,19 @@ usage:
 	@echo '[4]		run:		Run the myip command from the bin/ directory'
 
 export PIPENV_VENV_IN_PROJECT := 1
-.venv/bin: Pipfile
+.venv/x: Pipfile
 	pipenv install --dev
+	touch .venv/x
 
-init:.venv/bin
+init := .venv/x $(setup-webhooks)
 
-mypy: init tmp/
+mypy: $(init) tmp/
 	pipenv run mypy src
 
-flake8: init
+flake8: $(init)
 		pipenv run flake8
 
-pytest: init tmp/
+pytest: $(init) tmp/
 	export PYTHONPATH=src/ && pipenv run pytest
 
 pytest-all-versions:
@@ -35,14 +37,13 @@ pytest-all-versions:
 
 test: mypy flake8 pytest
 
-run: init
+run: $(init)
 	pipenv run ./bin/myip
 
 tmp/:
 	mkdir tmp
 
 .PHONY: 								\
-	init  								\
 	usage 								\
 	mypy  								\
 	flake8								\

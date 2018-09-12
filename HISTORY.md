@@ -1,5 +1,5 @@
 # Release History
 
-## dev
+## 0.0.0
 
-* Initial release (In development)
+* Development release
