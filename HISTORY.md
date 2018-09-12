@@ -1,5 +1,5 @@
 # Release History
 
-## 0.0.0
+## 0.1.0
 
-* Development release
+* Release of initial version to PYPI for public testing.
