@@ -15,15 +15,22 @@ export PIPENV_VENV_IN_PROJECT := 1
 	pipenv install --dev
 	touch .venv/x
 
-init := .venv/x $(setup-webhooks)
+.venv/y: .venv/x
+	pipenv run pip install --upgrade twine
+	touch .venv/y
 
-mypy: $(init) tmp/
+tmp/:
+	mkdir tmp
+
+init := .venv/x $(setup-webhooks) tmp/
+
+mypy: $(init)
 	pipenv run mypy src
 
 flake8: $(init)
 		pipenv run flake8
 
-pytest: $(init) tmp/
+pytest: $(init)
 	export PYTHONPATH=src/ && pipenv run pytest
 
 pytest-all-versions:
@@ -35,13 +42,17 @@ pytest-all-versions:
 			python:$$py_version /bin/bash -c "pip install pipenv --upgrade && make pytest" ; \
 	done
 
-test: mypy flake8 pytest
+build: $(init)
+	rm -rf build dist .eggs whatsmyip.egg-info
+	pipenv run python setup.py sdist bdist_wheel
+
+test: mypy flake8 pytest build
 
 run: $(init)
 	pipenv run ./bin/myip
 
-tmp/:
-	mkdir tmp
+release-testpypi: build .venv/y
+	pipenv run twine upload --repository-url "https://test.pypi.org/legacy/" dist/*
 
 .PHONY: 								\
 	usage 								\
@@ -49,4 +60,6 @@ tmp/:
 	flake8								\
 	test  								\
 	pytest-all-versions   \
-	run
+	run										\
+	build									\
+	release-testpypi

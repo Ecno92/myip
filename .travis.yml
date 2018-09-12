@@ -10,6 +10,13 @@ matrix:
       dist: xenial
       sudo: true
 script:
-  - make flake8
-  - make mypy
-  - make pytest
+  - PIPENV_IGNORE_VIRTUALENVS=1 make test
+deploy:
+  provider: pypi
+  user: $PYPI_USER
+  password: $PYPI_PASSWORD
+  distributions: "sdist bdist_wheel"
+  skip_cleanup: true
+  on:
+    branch: master
+    tags: true
