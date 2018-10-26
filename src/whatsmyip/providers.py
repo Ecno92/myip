@@ -30,6 +30,36 @@ class GoogleDnsProvider(metaclass=IpProvider):
         return ip
 
 
+class CloudflareDnsProvider(metaclass=IpProvider):
+    name = 'cloudflare-dns'
+
+    @staticmethod
+    def fetch():
+        r = dns.resolver.query('ns1.cloudflare.com')
+        ns_ip = r[0].address
+
+        resolver = dns.resolver.Resolver(configure=False)
+        resolver.nameservers = [ns_ip]
+
+        qr = resolver.query('whoami.cloudflare.com', 'TXT')
+
+        ip = qr.response.answer[0][0].to_text()
+        ip = ip.replace('"', '')
+        return ip
+
+
+class CloudflareHttpProvider(metaclass=IpProvider):
+    name = 'cloudflare'
+
+    @staticmethod
+    def fetch():
+        r = requests.get(url='https://cloudflare.com/cdn-cgi/trace')
+        for line in r.text.split("\n"):
+            k, v = line.split('=')
+            if k == 'ip':
+                return v
+
+
 class HttpbinProvider(metaclass=IpProvider):
     name = 'httpbin'
 
@@ -43,4 +73,6 @@ class HttpbinProvider(metaclass=IpProvider):
 
 ip_providers: Dict[str, IpProvider] = {
     GoogleDnsProvider.name: GoogleDnsProvider,
-    HttpbinProvider.name: HttpbinProvider}
+    HttpbinProvider.name: HttpbinProvider,
+    CloudflareDnsProvider.name: CloudflareDnsProvider,
+    CloudflareHttpProvider.name: CloudflareHttpProvider}

@@ -9,6 +9,22 @@ def test_google_dns_provider():
     pass
 
 
+@pytest.mark.skip(reason="TODO: Found no cheap testing strategy yet.")
+def test_cloudflare_dns_provider():
+    pass
+
+
+@responses.activate
+def test_cloudflare_provider():
+    responses.add(responses.GET, 'https://cloudflare.com/cdn-cgi/trace',
+                  body="""fl=100000
+                  h=www.cloudflare.com
+                  ip=240.0.0.0
+                  visit_scheme=https""", status=200)
+    provider = providers.CloudflareHttpProvider
+    provider.fetch()
+
+
 @responses.activate
 def test_httpbin_provider():
     responses.add(responses.GET, 'https://httpbin.org/ip',
