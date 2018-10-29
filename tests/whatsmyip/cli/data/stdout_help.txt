@@ -3,6 +3,6 @@ Usage: myip [OPTIONS]
   Query for the external IP address
 
 Options:
-  --provider [google-dns|httpbin|cloudflare-dns|cloudflare]
+  --provider [google-dns|httpbin|cloudflare-dns|cloudflare-http]
                                   Name of the provider
   --help                          Show this message and exit.

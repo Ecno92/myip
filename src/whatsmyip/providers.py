@@ -49,7 +49,7 @@ class CloudflareDnsProvider(metaclass=IpProvider):
 
 
 class CloudflareHttpProvider(metaclass=IpProvider):
-    name = 'cloudflare'
+    name = 'cloudflare-http'
 
     @staticmethod
     def fetch():
