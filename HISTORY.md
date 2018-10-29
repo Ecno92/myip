@@ -1,5 +1,9 @@
 # Release History
 
+## 0.1.2
+
+Added Cloudfront HTTP and DNS providers
+
 ## 0.1.1
 
 * New release with Markdown description on PYPI
