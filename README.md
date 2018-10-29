@@ -1,12 +1,23 @@
 # whatsmyip | myip
 [![Build Status](https://travis-ci.org/Ecno92/myip.svg?branch=master)](https://travis-ci.org/Ecno92/myip)
 
-## Usage
+## Installation and usage
 
 ```
-(whatsmyip)user@device:~/Projects/whatsmyip/bin$ ./myip --provider httpbin
+$ pip3 install whatsmyip
+$ myip
 240.0.0.0
 ```
+
+
+## Supported providers
+
+* Google DNS
+* httpbin.org
+* Cloudflare
+    - DNS
+    - HTTP
+
 
 ## Goal of this project
 
