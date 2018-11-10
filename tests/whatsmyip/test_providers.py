@@ -25,6 +25,12 @@ def dns_ip_query_response():
     return answer
 
 
+def test_base_ip_provider():
+    with pytest.raises(NotImplementedError):
+        provider = providers.IpProvider
+        provider.fetch()
+
+
 @mock.patch('dns.resolver.Resolver.query')
 @pytest.mark.parametrize(
     'provider',

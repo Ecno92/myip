@@ -1,10 +1,10 @@
-from unittest.mock import MagicMock
 from whatsmyip.providers import IpProvider
 from whatsmyip.ip import get_ip
+from unittest import mock
 
 
-def test_get_ip():
+@mock.patch('whatsmyip.providers.IpProvider.fetch', return_value='240.0.0.0')
+def test_get_ip(mocked_fetch):
     provider = IpProvider
-    provider.fetch = MagicMock(return_value='240.0.0.0')
     get_ip(provider)
     assert provider.fetch.called
