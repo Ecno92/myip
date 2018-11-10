@@ -45,10 +45,21 @@ def test_dns_providers(
 @responses.activate
 def test_cloudflare_provider():
     responses.add(responses.GET, 'https://cloudflare.com/cdn-cgi/trace',
-                  body="""fl=100000
-                  h=www.cloudflare.com
-                  ip=240.0.0.0
-                  visit_scheme=https""", status=200)
+                  body="""
+fl=100000
+h=www.cloudflare.com
+ip=240.0.0.0
+visit_scheme=https
+uag=python-requests/2.20.1
+colo=AMS
+spdy=off
+http=http/1.1
+loc=NL
+tls=TLSv1.2
+sni=plaintext
+
+""",
+                  status=200)
     provider = providers.CloudflareHttpProvider
     provider.fetch()
 
