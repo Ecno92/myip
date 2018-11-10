@@ -11,18 +11,18 @@ usage:
 	@echo '[4]		run:		Run the myip command from the bin/ directory'
 
 export PIPENV_VENV_IN_PROJECT := 1
-.venv/x: Pipfile
+.venv/base: Pipfile
 	pipenv install --dev
-	touch .venv/x
+	touch .venv/base
 
-.venv/y: .venv/x
+.venv/deploy: .venv/base
 	pipenv run pip install --upgrade twine
-	touch .venv/y
+	touch .venv/deploy
 
 tmp/:
 	mkdir tmp
 
-init := .venv/x $(setup-webhooks) tmp/
+init := .venv/base $(setup-webhooks) tmp/
 
 mypy: $(init)
 	pipenv run mypy src
@@ -33,13 +33,13 @@ flake8: $(init)
 pytest: $(init)
 	pipenv run pytest
 
-pytest-all-versions:
+test-all-versions:
 	@for py_version in 3.6 3.7; do \
 		echo 'TESTING Python version: '$$py_version ; \
 		echo '===========================' ; \
 		docker run -v "$(PWD):/workdir" -w "/workdir" \
 			-v "/workdir/.venv" -v "/workdir/tmp/" \
-			python:$$py_version /bin/bash -c "pip install pipenv --upgrade && make pytest" ; \
+			python:$$py_version /bin/bash -c "pip install pipenv --upgrade && make test" ; \
 	done
 
 build: $(init)
@@ -51,7 +51,7 @@ test: mypy flake8 pytest build
 run: $(init)
 	pipenv run ./bin/myip
 
-release-testpypi: build .venv/y
+release-testpypi: build .venv/deploy
 	pipenv run twine upload --repository-url "https://test.pypi.org/legacy/" dist/*
 
 .PHONY: 								\
@@ -59,7 +59,7 @@ release-testpypi: build .venv/y
 	mypy  								\
 	flake8								\
 	test  								\
-	pytest-all-versions   \
+	test-all-versions   \
 	run										\
 	build									\
 	release-testpypi
