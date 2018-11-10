@@ -31,7 +31,7 @@ flake8: $(init)
 		pipenv run flake8
 
 pytest: $(init)
-	export PYTHONPATH=src/ && pipenv run pytest
+	pipenv run pytest
 
 pytest-all-versions:
 	@for py_version in 3.6 3.7; do \
