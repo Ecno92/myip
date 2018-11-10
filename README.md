@@ -3,10 +3,19 @@
 
 ## Installation and usage
 
+As a CLI tool:
 ```
 $ pip3 install whatsmyip
 $ myip
 240.0.0.0
+```
+
+As a library:
+```
+>>> from whatsmyip.ip import get_ip
+>>> from whatsmyip.providers import GoogleDnsProvider  # Or any other provider
+>>> get_ip(GoogleDnsProvider)
+'240.0.0.0'
 ```
 
 
