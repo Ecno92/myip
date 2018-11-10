@@ -1,17 +1,45 @@
 import pytest
 import inspect
 import responses
+from unittest import mock
 import whatsmyip.providers as providers
+from dns.rdtypes.IN.A import A
+from dns.rdtypes.ANY.TXT import TXT
 
 
-@pytest.mark.skip(reason="TODO: Found no cheap testing strategy yet.")
-def test_google_dns_provider():
-    pass
+@pytest.fixture()
+def dns_ns_query_response():
+    answer = []
+    answer.append(
+        A(1, 1, '216.239.32.10')
+    )
+    return answer
 
 
-@pytest.mark.skip(reason="TODO: Found no cheap testing strategy yet.")
-def test_cloudflare_dns_provider():
-    pass
+@pytest.fixture()
+def dns_ip_query_response():
+    answer = []
+    answer.append(
+        TXT(1, 16, [b'240.0.0.0'])
+    )
+    return answer
+
+
+@mock.patch('dns.resolver.Resolver.query')
+@pytest.mark.parametrize(
+    'provider',
+    [
+        (providers.GoogleDnsProvider),
+        (providers.CloudflareDnsProvider)
+    ]
+)
+def test_dns_providers(
+    mock_query, provider, dns_ns_query_response, dns_ip_query_response
+):
+    mock_query.side_effect = [dns_ns_query_response,
+                              dns_ip_query_response]
+    ip = provider.fetch()
+    assert ip == '240.0.0.0'
 
 
 @responses.activate

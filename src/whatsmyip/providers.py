@@ -17,15 +17,15 @@ class GoogleDnsProvider(metaclass=IpProvider):
 
     @staticmethod
     def fetch():
-        r = dns.resolver.query('ns1.google.com')
-        ns_ip = r[0].address
+        resolver = dns.resolver.Resolver(configure=True)
 
-        resolver = dns.resolver.Resolver(configure=False)
+        resp = resolver.query('ns1.google.com')
+
+        ns_ip = resp[0].to_text()
         resolver.nameservers = [ns_ip]
 
-        qr = resolver.query('o-o.myaddr.l.google.com', 'TXT')
-
-        ip = qr.response.answer[0][0].to_text()
+        resp_two = resolver.query('o-o.myaddr.l.google.com', 'TXT')
+        ip = resp_two[0].to_text()
         ip = ip.replace('"', '')
         return ip
 
@@ -35,15 +35,15 @@ class CloudflareDnsProvider(metaclass=IpProvider):
 
     @staticmethod
     def fetch():
-        r = dns.resolver.query('ns1.cloudflare.com')
-        ns_ip = r[0].address
+        resolver = dns.resolver.Resolver(configure=True)
 
-        resolver = dns.resolver.Resolver(configure=False)
+        r = resolver.query('ns1.cloudflare.com')
+
+        ns_ip = r[0].address
         resolver.nameservers = [ns_ip]
 
-        qr = resolver.query('whoami.cloudflare.com', 'TXT')
-
-        ip = qr.response.answer[0][0].to_text()
+        resp_two = resolver.query('whoami.cloudflare.com', 'TXT')
+        ip = resp_two[0].to_text()
         ip = ip.replace('"', '')
         return ip
 
