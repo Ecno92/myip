@@ -28,7 +28,7 @@ mypy: $(init)
 	pipenv run mypy src
 
 flake8: $(init)
-		pipenv run flake8
+	pipenv run flake8
 
 pytest: $(init)
 	pipenv run pytest
