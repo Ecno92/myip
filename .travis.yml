@@ -11,6 +11,8 @@ matrix:
       sudo: true
 script:
   - PIPENV_IGNORE_VIRTUALENVS=1 make test
+after_success:
+  - PIPENV_IGNORE_VIRTUALENVS=1 pipenv run coveralls
 deploy:
   provider: pypi
   user: $PYPI_USER

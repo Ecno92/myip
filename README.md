@@ -1,5 +1,7 @@
 # whatsmyip | myip
 [![Build Status](https://travis-ci.org/Ecno92/myip.svg?branch=master)](https://travis-ci.org/Ecno92/myip)
+[![pypi release](https://img.shields.io/pypi/v/whatsmyip.svg)](https://pypi.org/project/whatsmyip/)
+[![Coverage Status](https://coveralls.io/repos/github/Ecno92/myip/badge.svg?branch=master)](https://coveralls.io/github/Ecno92/myip?branch=master)
 
 ## Installation and usage
 
