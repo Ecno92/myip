@@ -12,21 +12,27 @@ class IpProvider(type):
         raise NotImplementedError
 
 
+def fetch_ip_for_dns_provider(ns_address, query_address):
+    resolver = dns.resolver.Resolver(configure=True)
+
+    resp = resolver.query(ns_address)
+
+    ns_ip = resp[0].to_text()
+    resolver.nameservers = [ns_ip]
+
+    resp_two = resolver.query(query_address, 'TXT')
+    ip = resp_two[0].to_text()
+    ip = ip.replace('"', '')
+    return ip
+
+
 class GoogleDnsProvider(metaclass=IpProvider):
     name = 'google-dns'
 
     @staticmethod
     def fetch():
-        resolver = dns.resolver.Resolver(configure=True)
-
-        resp = resolver.query('ns1.google.com')
-
-        ns_ip = resp[0].to_text()
-        resolver.nameservers = [ns_ip]
-
-        resp_two = resolver.query('o-o.myaddr.l.google.com', 'TXT')
-        ip = resp_two[0].to_text()
-        ip = ip.replace('"', '')
+        ip = fetch_ip_for_dns_provider(
+            'ns1.google.com', 'o-o.myaddr.l.google.com')
         return ip
 
 
@@ -35,16 +41,8 @@ class CloudflareDnsProvider(metaclass=IpProvider):
 
     @staticmethod
     def fetch():
-        resolver = dns.resolver.Resolver(configure=True)
-
-        r = resolver.query('ns1.cloudflare.com')
-
-        ns_ip = r[0].address
-        resolver.nameservers = [ns_ip]
-
-        resp_two = resolver.query('whoami.cloudflare.com', 'TXT')
-        ip = resp_two[0].to_text()
-        ip = ip.replace('"', '')
+        ip = fetch_ip_for_dns_provider(
+            'ns1.cloudflare.com', 'whoami.cloudflare.com')
         return ip
 
 
@@ -54,10 +52,11 @@ class CloudflareHttpProvider(metaclass=IpProvider):
     @staticmethod
     def fetch():
         r = requests.get(url='https://cloudflare.com/cdn-cgi/trace')
-        for line in r.text.split("\n"):
-            k, v = line.split('=')
-            if k == 'ip':
-                return v
+        items = dict(
+            item.split('=') for item in filter(None, r.text.split('\n'))
+        )
+        ip = items['ip']
+        return ip
 
 
 class HttpbinProvider(metaclass=IpProvider):
