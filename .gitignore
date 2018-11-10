@@ -1,6 +1,7 @@
 build/
 dist/
 tmp/
+htmlcov/
 .venv/
 __pycache__
 *.pyc

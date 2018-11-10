@@ -7,6 +7,7 @@ name = "pypi"
 dnspython = "*"
 click = "*"
 requests = "*"
+pytest-cov = "*"
 
 [dev-packages]
 pytest = "*"
@@ -17,3 +18,4 @@ epc = "*"
 responses = "*"
 mypy = "*"
 pytest-pythonpath = "*"
+pytest-cov = "*"
