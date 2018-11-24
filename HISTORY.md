@@ -1,5 +1,9 @@
 # Release History
 
+## 0.1.3
+
+Improved README for using whatsmyip as a module in your project.
+
 ## 0.1.2
 
 Added Cloudfront HTTP and DNS providers
