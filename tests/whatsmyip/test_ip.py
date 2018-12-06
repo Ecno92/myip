@@ -7,4 +7,4 @@ from unittest import mock
 def test_get_ip(mocked_fetch):
     provider = IpProvider
     get_ip(provider)
-    assert provider.fetch.called
+    assert provider.fetch.called is True
