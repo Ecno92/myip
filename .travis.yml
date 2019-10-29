@@ -7,8 +7,6 @@ matrix:
   include:
     - python: 3.6
     - python: 3.7
-      dist: xenial
-      sudo: true
 script:
   - PIPENV_IGNORE_VIRTUALENVS=1 make test
 after_success:
@@ -21,4 +19,4 @@ deploy:
   on:
     branch: master
     tags: true
-    python: 3.6
+    python: 3.7
